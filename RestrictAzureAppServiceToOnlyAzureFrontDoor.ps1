@@ -1,3 +1,5 @@
+# https://www.wintellect.com/restricting-azure-app-service-access-to-azure-front-door/
+
 Connect-AzAccount
 
 Select-AzSubscription -Subscription 'sub-dev-idso-000'
