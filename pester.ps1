@@ -28,19 +28,19 @@ Describe "Our Application" {
     }
     #endregion Azure Front Door Endpoint
 
-    #region Public Endpoint
+    #region Custom Domain Endpoint
     Context "When Stopped" -Tag "Offline" {
         It "Public Endpoint Should Not Respond" {
             { Invoke-WebRequest -Uri "https://api.ididevsecops.net" -Method Get -SkipHttpErrorCheck } | Should -Throw
         }
     }
     Context "When Started" -Tag "Online" {
-        It "Public Endpoint Should Return Status Code 200" {
+        It "Custom Domain Endpoint Should Return Status Code 200" {
             (Invoke-WebRequest -Uri "https://api.ididevsecops.net" -Method Get -SkipHttpErrorCheck).StatusCode | Should -Be 200
         }
-        It "Public Endpoint Should Endpoint Return 0 Bytes" {
+        It "Custom Domain Endpoint Should Endpoint Return 0 Bytes" {
             (Invoke-WebRequest -Uri "https://api.ididevsecops.net" -Method Get -SkipHttpErrorCheck).RawContentLength | Should -Be 0
         }
     }
-    #endregion Public Endpoint
+    #endregion Custom Domain Endpoint
 }
