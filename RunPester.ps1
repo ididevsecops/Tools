@@ -10,6 +10,6 @@ Clear-Host
 do {
     Invoke-Pester -Path .\pester.ps1 -Output Detailed
 
-    Start-Sleep -Seconds 1
+    Start-Sleep -Seconds 3
 }
 while ($Loop)

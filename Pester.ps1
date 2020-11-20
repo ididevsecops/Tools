@@ -42,20 +42,11 @@ Describe "The Application" {
             # $Uri = "https://23.96.110.193:443/"
 
             # Azure Load Balancer Public DNS for Virtual Machine(s) (vmmcguffin*)
-            # $Uri = "http://pipvmmcguffin001prodidso000.eastus.cloudapp.azure.com:80/"
-            # $Uri = "https://pipvmmcguffin001prodidso000.eastus.cloudapp.azure.com:443/"
-
-            # Azure Load Balancer Public IP for Virtual Machine(s) (vmmcguffin*)
-            # $Uri = "http://23.96.110.193:80/"
-            # $Uri = "https://23.96.110.193:443/"
-
-            # Azure Load Balancer Public DNS for Virtual Machine(s) (vmmcguffin*)
             # $Uri = "http://pipvmmcguffinprodidso000.eastus.cloudapp.azure.com:80/"
             # $Uri = "https://pipvmmcguffinprodidso000.eastus.cloudapp.azure.com:443/"
 
             # Custom DNS
             # $Uri = "http://mcguffin.ididevsecops.net:80/"
-            # $Uri = "https://mcguffin.ididevsecops.net:443/"
             # $Uri = "https://mcguffin.ididevsecops.net:443/"
 
             $Response = Invoke-WebRequest -Uri $Uri -Method Get -SkipHttpErrorCheck -SkipCertificateCheck
