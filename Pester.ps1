@@ -2,7 +2,7 @@ Describe "The Application" {
     Context "When Started" -Tag "Online" {
         BeforeAll {
             # IIS (Development)
-            $Uri = "http://localhost:80/"
+            # $Uri = "http://localhost:80/"
             # $Uri = "https://localhost:443/"
 
             # Kestrel (Development)
@@ -46,7 +46,7 @@ Describe "The Application" {
             # $Uri = "https://pipvmmcguffinprodidso000.eastus.cloudapp.azure.com:443/"
 
             # Custom DNS
-            # $Uri = "http://mcguffin.ididevsecops.net:80/"
+            $Uri = "http://mcguffin.ididevsecops.net:80/"
             # $Uri = "https://mcguffin.ididevsecops.net:443/"
 
             $Response = Invoke-WebRequest -Uri $Uri -Method Get -SkipHttpErrorCheck -SkipCertificateCheck
