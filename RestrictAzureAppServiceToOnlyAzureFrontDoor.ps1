@@ -2,48 +2,48 @@
 
 Connect-AzAccount
 
-Select-AzSubscription -Subscription 'sub-dev-idso-000'
+Select-AzSubscription -Subscription "sub-prod-idso-000"
 
-$addresses = (Get-AzNetworkServiceTag -Location eastus).Values.Where( { $_.Name -eq 'AzureFrontDoor.Backend' }).Properties.AddressPrefixes
+$Addresses = (Get-AzNetworkServiceTag -Location "eastus").Values.Where( { $_.Name -eq "AzureFrontDoor.Backend" }).Properties.AddressPrefixes
 
-$config = Get-AzResource -ResourceName 'as-webapp-dev-idso-001' -ResourceType Microsoft.Web/sites/config -ResourceGroupName 'rg-webapp-dev-idso-001' -ApiVersion '2019-08-01'
+$Resource = Get-AzResource -ResourceName "app-mcguffin-prod-idso-000" -ResourceGroupName "rg-mcguffin-prod-idso-001" -ResourceType "Microsoft.Web/sites/config" -ApiVersion "2019-08-01"
 
-$rules = $config.Properties.ipSecurityRestrictions.Where( { -not ($_.priority -ge 1000 -and $_.priority -le 1999) })
+$IpSecurityRestrictions = $Resource.Properties.ipSecurityRestrictions.Where( { -not ($_.priority -ge 1000 -and $_.priority -le 1999) })
 
-$priority = 1000;
+$Priority = 1000;
 
-$rules += New-Object PSObject -Property @{
-  ipAddress   = '168.63.129.16/32'
+$IpSecurityRestrictions += New-Object PSObject -Property @{
+  ipAddress   = "168.63.129.16/32"
   action      = "Allow"
-  priority    = $priority
-  name        = "Azure Infrastructure $priority"
+  priority    = $Priority
+  name        = "Azure Infrastructure $Priority"
   description = "Automatically added address"
 }
-  
-$priority++;
 
-$rules += New-Object PSObject -Property @{
-  ipAddress   = '169.254.169.254/32'
+$Priority++;
+
+$IpSecurityRestrictions += New-Object PSObject -Property @{
+  ipAddress   = "169.254.169.254/32"
   action      = "Allow"
-  priority    = $priority
-  name        = "Azure Infrastructure $priority"
+  priority    = $Priority
+  name        = "Azure Infrastructure $Priority"
   description = "Automatically added address"
 }
-  
-$priority++;
 
-foreach ($address in $addresses) {
-  $rules += New-Object PSObject -Property @{
+$Priority++;
+
+foreach ($address in $Addresses) {
+  $IpSecurityRestrictions += New-Object PSObject -Property @{
     ipAddress   = $address
     action      = "Allow"
-    priority    = $priority
-    name        = "FrontDoor.Backend $priority"
+    priority    = $Priority
+    name        = "FrontDoor.Backend $Priority"
     description = "Automatically added address"
   }
-  
-  $priority++;
+
+  $Priority++;
 }
 
-$config.Properties.ipSecurityRestrictions = $rules
+$Resource.Properties.ipSecurityRestrictions = $IpSecurityRestrictions
 
-Set-AzResource -ResourceId $config.ResourceId -Properties $config.Properties -ApiVersion '2019-08-01' -Force
+Set-AzResource -ResourceId $Resource.ResourceId -Properties $Resource.Properties -ApiVersion "2019-08-01" -Force
