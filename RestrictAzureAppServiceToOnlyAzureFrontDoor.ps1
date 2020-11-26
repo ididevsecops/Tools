@@ -1,8 +1,6 @@
 # https://www.wintellect.com/restricting-azure-app-service-access-to-azure-front-door/
 
-Connect-AzAccount
-
-Select-AzSubscription -Subscription "sub-prod-idso-000"
+Connect-AzAccount -TenantId "d3efb988-727d-47ea-adb8-cce6dc17857d" -Subscription "sub-prod-idso-000"
 
 $Addresses = (Get-AzNetworkServiceTag -Location "eastus").Values.Where( { $_.Name -eq "AzureFrontDoor.Backend" }).Properties.AddressPrefixes
 
